@@ -1,6 +1,9 @@
 <template>
   <Layout>
-    <div>Money</div>
+    <div>
+      Money <br>
+
+    </div>
   </Layout>
 </template>
 

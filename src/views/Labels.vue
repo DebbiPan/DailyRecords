@@ -12,3 +12,7 @@ export default {
   components:Layout
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

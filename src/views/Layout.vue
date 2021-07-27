@@ -2,6 +2,7 @@
   <div class="nav-wrapper">
     <div class="content">
       <slot></slot>
+      <div class="bottom"></div>
     </div>
     <Nav/>
   </div>
@@ -14,13 +15,30 @@ export default{
 </script>
 
 <style lang="scss" scoped>
+//.nav-wrapper{
+//  display:flex;
+//  flex-direction: column;
+//  height:100vh;
+//}
+//.content{
+//  overflow: auto;
+//  flex-grow: 1;
+//  border:1px solid red;
+//}
 .nav-wrapper{
-  display:flex;
-  flex-direction: column;
-  height:100vh;
+  height:100%;
+  .content{
+    .bottom{
+      width:100%;
+      height: 5vh;
+    }
+  }
+  Nav{
+    width:100%;
+    height:5vh;
+    position: fixed;
+    bottom:0;
+  }
 }
-.content{
-  overflow: auto;
-  flex-grow: 1;
-}
+
 </style>

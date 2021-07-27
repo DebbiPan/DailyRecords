@@ -1,5 +1,8 @@
 <template>
-  <Layout>Statistics</Layout>
+  <Layout>
+    Statistics <br>
+
+  </Layout>
 </template>
 
 <script lang="ts">
