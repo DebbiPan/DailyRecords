@@ -6,12 +6,12 @@
       标签
     </div>
   </router-link>
-  <router-link to="/money" class="item">
+  <router-link to="/money" class="item" active-class="selected">
     <div class="item-center">
       记一笔
     </div>
   </router-link>
-  <router-link to="/Statistics" class="item">
+  <router-link to="/Statistics" class="item" active-class="selected">
     <div class="item-content">
       <Icon name="Statistics"/>
       流水
@@ -45,10 +45,11 @@ nav{
     &:nth-child(2){
       background: #5BC2E7;
       border-radius: 8px;
+      color:#fff;
+      box-shadow: 3px 3px 3px rgb(0,0,0,0.25);
     }
     >.item-center{
       text-align: center;
-      color:#fff;
       font-size: 18px;
     }
     >.item-content{
@@ -56,9 +57,13 @@ nav{
       flex-direction: column;
       align-items: center;
     }
-  >.item.selected{
-    color:red;
   }
+  >.item.selected{
+    color:#F3AFAC;
+    font-weight: bold;
+    &:nth-child(2){
+      color:#fff;
+    }
   }
 }
 </style>
