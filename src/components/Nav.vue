@@ -31,6 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/style/helper.scss";
 nav{
   display:flex;
   flex-direction: row;
@@ -42,8 +43,9 @@ nav{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background: #fff;
     &:nth-child(2){
-      background: #5BC2E7;
+      background: $blue;
       border-radius: 8px;
       color:#fff;
       box-shadow: 3px 3px 3px rgb(0,0,0,0.25);
@@ -59,7 +61,7 @@ nav{
     }
   }
   >.item.selected{
-    color:#F3AFAC;
+    color:$pink;
     font-weight: bold;
     &:nth-child(2){
       color:#fff;

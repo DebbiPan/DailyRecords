@@ -1,8 +1,21 @@
 <template>
-  <Layout>
-    Statistics <br>
-
-  </Layout>
+  <div class="wrap">
+    <ul class="types">
+      <li class="expenditure selected">支出</li>
+      <li class="income">收入</li>
+    </ul>
+    <div class="tags">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <Layout/>
+  </div>
 </template>
 
 <script lang="ts">
