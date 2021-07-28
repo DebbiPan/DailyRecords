@@ -9,7 +9,6 @@
 @import "~@/assets/style/reset.scss";
 body{
   line-height:1.5;
-  font-family: $font-hei;
   color:$hei-font
 }
 #app {

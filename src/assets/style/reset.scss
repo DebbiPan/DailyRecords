@@ -9,3 +9,10 @@ a{
 ul,li,ol{
   list-style: none;
 }
+input,button{
+  font:inherit;
+  border:none;
+}
+:focus{
+  outline: none;
+}
