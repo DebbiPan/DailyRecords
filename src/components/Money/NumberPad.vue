@@ -5,38 +5,66 @@
         <span class="name">备注:</span>
         <input type="text" placeholder="点击写备注...">
       </label>
-      <div class="output">0.00</div>
+      <div class="output">{{output}}</div>
     </div>
     <div class="buttons">
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
+      <button @click="inputContent">7</button>
+      <button @click="inputContent">8</button>
+      <button @click="inputContent">9</button>
       <button class="date">
         <Icon name="date" class="dateIcon"></Icon>
         今天
       </button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
+      <button @click="inputContent">4</button>
+      <button @click="inputContent">5</button>
+      <button @click="inputContent">6</button>
       <button>+</button>
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
+      <button @click="inputContent">1</button>
+      <button @click="inputContent">2</button>
+      <button @click="inputContent">3</button>
       <button>-</button>
-      <button>.</button>
-      <button>0</button>
-      <button class="delete">删除</button>
+      <button @click="inputContent">.</button>
+      <button @click="inputContent">0</button>
+      <button @click="remove" class="delete">删除</button>
       <button class="ok">完成</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import Vue from 'vue'
 import Icon from "@/components/Icon.vue";
+import {Component} from 'vue-property-decorator';
 
-export default{
-  name:'NumberPad',
+@Component({
   components:{Icon}
+})
+export default class NumberPad extends Vue{
+  output = '0';
+  inputContent(event:MouseEvent){
+    const button = (event.target as string);
+    const input = button.textContent;
+    if(this.output.length === 16){return;}
+    if(this.output === '0'){
+      if('0123456789'.indexOf(input) >= 0){
+        this.output = input;
+      }else{
+        this.output += input;
+      }
+      return;
+    }
+    if(this.output.indexOf('.') >= 0 && input ==='.'){
+      return;
+    }
+    this.output += input;
+  }
+  remove(){
+    if(this.output.length === 1){
+      this.output = '0';
+    }else{
+      this.output = this.output.slice(0,this.output.length-1)
+    }
+  }
 }
 </script>
 
@@ -44,6 +72,7 @@ export default{
 @import "~@/assets/style/helper.scss";
 .numberPad{
   background: $grey;
+  font-size:18px;
   >.padNav{
     display:flex;
     flex-direction: row;
@@ -75,6 +104,9 @@ export default{
       .dateIcon{
         width:20px;
         height:20px;
+      }
+      &:active{
+        background:#C7C7C7;
       }
     }
   }

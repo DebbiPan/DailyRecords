@@ -7,13 +7,16 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue';
 import Type from "@/components/Money/Type.vue";
 import Tags from "@/components/Money/Tags.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
+import {Component} from 'vue-property-decorator';
 
-export default {
-  name:'money',
+@Component({
   components:{Type,Tags,NumberPad}
+})
+export default class Money extends Vue{
 }
 </script>
 
