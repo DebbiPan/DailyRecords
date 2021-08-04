@@ -2,17 +2,35 @@
   <nav>
     <Icon name="back" class="back"></Icon>
     <ul class="types">
-      <li class="expenditure selected">支出</li>
-      <li class="income">收入</li>
+      <li :class="type === '-' && 'selected'"
+          @click="selectType('-')">
+        支出
+      </li>
+      <li :class="type === '+' && 'selected'"
+          @click="selectType('+')">
+        收入
+      </li>
     </ul>
   </nav>
 </template>
 
 <script lang="ts">
-import Icon from "@/components/Icon.vue";
-export default{
-  name:'Nav',
+import Vue from 'vue'
+import {Component} from 'vue-property-decorator';
+import Icon from "@/components/Icon.vue"
+
+@Component({
   components:{Icon}
+})
+export default class Type extends Vue{
+  type='-';
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  selectType(type:string){
+    if(type !== '-' && type !== '+'){
+      throw new Error ('type is unknow');
+    }
+    this.type = type;
+  }
 }
 </script>
 

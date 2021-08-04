@@ -1,19 +1,19 @@
 <template>
   <div class="wrap">
-    <Nav/>
+    <Type/>
     <Tags/>
     <NumberPad/>
   </div>
 </template>
 
 <script lang="ts">
-import Nav from "@/components/Money/Nav.vue";
+import Type from "@/components/Money/Type.vue";
 import Tags from "@/components/Money/Tags.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 
 export default {
   name:'money',
-  components:{Nav,Tags,NumberPad}
+  components:{Type,Tags,NumberPad}
 }
 </script>
 
