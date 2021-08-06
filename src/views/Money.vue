@@ -2,6 +2,7 @@
   <div class="wrap">
     <Type :data-type.sync="record.type"/>
     <Tags class="tags" :out-tags.sync="outTags" @update:tags="onChangeTags"/>
+    <div>{{record}}</div>
     <NumberPad @update:value="onValueChange" :amount.sync="record.amount"/>
   </div>
 </template>

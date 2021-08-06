@@ -30,10 +30,12 @@ export default class Tags extends Vue{
     const selected = this.selectedTag;
     if(selected.length === 0){
       selected.push(tag);
+    }else if(selected.length === 1){
+      selected.splice(0,1);
+      selected.push(tag);
     }else if(selected.indexOf(tag)>=0){
-        selected.splice(0,1);
+      selected.splice(0,1);
     }
-    console.log(selected);
     this.$emit('update:tags',selected)
   }
   addTag(){
