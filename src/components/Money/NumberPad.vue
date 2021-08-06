@@ -26,7 +26,7 @@
       <button @click="inputContent">.</button>
       <button @click="inputContent">0</button>
       <button @click="remove" class="delete">删除</button>
-      <button class="ok">完成</button>
+      <button @click="ok" class="ok">完成</button>
     </div>
   </div>
 </template>
@@ -34,17 +34,24 @@
 <script lang="ts">
 import Vue from 'vue'
 import Icon from "@/components/Icon.vue";
-import {Component} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component({
   components:{Icon}
 })
 export default class NumberPad extends Vue{
-  output = '0';
   value = '';
+
+  @Watch('value')
+  onValueChange(value:string){
+    this.$emit('update:value',value)
+  }
+  @Prop() readonly amount!:number
+  output = this.amount.toString()
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   inputContent(event:MouseEvent){
-    const button = (event.target as string);
-    const input = button.textContent;
+    const button = (event.target as HTMLButtonElement);
+    const input = button.textContent!;
     if(this.output.length === 16){return;}
     if(this.output === '0'){
       if('0123456789'.indexOf(input) >= 0){
@@ -65,6 +72,10 @@ export default class NumberPad extends Vue{
     }else{
       this.output = this.output.slice(0,this.output.length-1)
     }
+  }
+  ok(){
+    console.log(this.output);
+    this.$emit('update:amount',parseFloat(this.output))
   }
 }
 </script>

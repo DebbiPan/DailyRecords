@@ -24,7 +24,7 @@ import {Component, Prop} from 'vue-property-decorator';
   components:{Icon}
 })
 export default class Tags extends Vue{
-  @Prop(Array) readonly outTags!:string;
+  @Prop() readonly outTags!:string;
   selectedTag:string[] = [];
   select(tag:string){
     const selected = this.selectedTag;
@@ -33,6 +33,8 @@ export default class Tags extends Vue{
     }else if(selected.indexOf(tag)>=0){
         selected.splice(0,1);
     }
+    console.log(selected);
+    this.$emit('update:tags',selected)
   }
   addTag(){
     const tagName = window.prompt('请输入你要添加的标签名')

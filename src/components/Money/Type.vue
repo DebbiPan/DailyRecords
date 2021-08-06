@@ -2,11 +2,11 @@
   <nav>
     <Icon name="back" class="back"></Icon>
     <ul class="types">
-      <li :class="type === '-' && 'selected'"
+      <li :class="dataType === '-' && 'selected'"
           @click="selectType('-')">
         支出
       </li>
-      <li :class="type === '+' && 'selected'"
+      <li :class="dataType === '+' && 'selected'"
           @click="selectType('+')">
         收入
       </li>
@@ -16,20 +16,26 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {Component} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 import Icon from "@/components/Icon.vue"
 
 @Component({
   components:{Icon}
 })
 export default class Type extends Vue{
-  type='-';
+  @Prop() readonly dataType!:string;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   selectType(type:string){
     if(type !== '-' && type !== '+'){
       throw new Error ('type is unknow');
+    }else{
+      this.$emit('update:dataType',type);
     }
-    this.type = type;
+  }
+
+  @Watch('dataType')
+  dataTypeChange(value:string){
+    this.$emit('update:value',value)
   }
 }
 </script>
