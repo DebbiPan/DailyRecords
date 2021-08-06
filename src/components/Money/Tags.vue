@@ -33,8 +33,6 @@ export default class Tags extends Vue{
     }else if(selected.length === 1){
       selected.splice(0,1);
       selected.push(tag);
-    }else if(selected.indexOf(tag)>=0){
-      selected.splice(0,1);
     }
     this.$emit('update:tags',selected)
   }
