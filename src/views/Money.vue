@@ -1,8 +1,8 @@
 <template>
   <div class="wrap">
     <Type/>
-    <Tags class="tags"/>
-    <NumberPad class="number"/>
+    <Tags class="tags" :out-tags.sync="outTags"/>
+    <NumberPad/>
   </div>
 </template>
 
