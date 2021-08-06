@@ -126,18 +126,22 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue';
 import Icon from "@/components/Icon.vue";
-export default{
-  name:'Tags',
+import {Component, Prop} from 'vue-property-decorator';
+
+@Component({
   components:{Icon}
+})
+export default class Tags extends Vue{
+  @Prop(Array) readonly outTags!:string
 }
 </script>
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
 .tags{
-  overflow: auto;
-  margin-bottom: 20px;
+  margin-bottom: 1px;
   >ul{
     display:flex;
     flex-flow: row wrap;
@@ -152,7 +156,7 @@ export default{
         background: $grey;
         border-radius: 50px;
         margin:15px 10px 5px 10px;
-        padding:5px;
+        padding:10px;
       }
     }
   }
