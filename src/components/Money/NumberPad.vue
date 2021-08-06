@@ -11,22 +11,21 @@
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
+      <button @click="clear">清空</button>
+      <button @click="inputContent">4</button>
+      <button @click="inputContent">5</button>
+      <button @click="inputContent">6</button>
+      <button @click="remove" class="delete">删除</button>
+      <button @click="inputContent">1</button>
+      <button @click="inputContent">2</button>
+      <button @click="inputContent">3</button>
+      <button @click="ok" class="ok">确定</button>
       <button class="date">
         <Icon name="date" class="dateIcon"></Icon>
         今天
       </button>
-      <button @click="inputContent">4</button>
-      <button @click="inputContent">5</button>
-      <button @click="inputContent">6</button>
-      <button>+</button>
-      <button @click="inputContent">1</button>
-      <button @click="inputContent">2</button>
-      <button @click="inputContent">3</button>
-      <button>-</button>
-      <button @click="inputContent">.</button>
       <button @click="inputContent">0</button>
-      <button @click="remove" class="delete">删除</button>
-      <button @click="ok" class="ok">完成</button>
+      <button @click="inputContent">.</button>
     </div>
   </div>
 </template>
@@ -73,8 +72,10 @@ export default class NumberPad extends Vue{
       this.output = this.output.slice(0,this.output.length-1)
     }
   }
+  clear(){
+    this.output = '0'
+  }
   ok(){
-    console.log(this.output);
     this.$emit('update:amount',parseFloat(this.output))
   }
 }
@@ -112,6 +113,10 @@ export default class NumberPad extends Vue{
       border-right:1px solid #555555;
       &:nth-of-type(4n){
         border-right:none;
+      }
+      &.ok{
+        height:120px;
+        float: right;
       }
       .dateIcon{
         width:20px;
