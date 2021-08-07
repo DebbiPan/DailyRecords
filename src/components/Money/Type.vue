@@ -1,6 +1,9 @@
 <template>
   <nav>
-    <Icon name="back" class="back"></Icon>
+    <router-link to="/"  class="back">
+      <Icon name="back" class="icon"></Icon>
+    </router-link>
+
     <ul class="types">
       <li :class="dataType === '-' && 'selected'"
           @click="selectType('-')">
@@ -54,6 +57,10 @@ nav{
     height:30px;
     position: relative;
     top:10px;
+    >.icon{
+      width:30px;
+      height:30px;
+    }
   }
   >ul{
     display: flex;
