@@ -32,12 +32,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Icon from "@/components/Icon.vue";
 import {Component, Watch} from 'vue-property-decorator';
 
-@Component({
-  components:{Icon}
-})
+@Component
 export default class NumberPad extends Vue{
   value = '';
   output = '0'

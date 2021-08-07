@@ -17,12 +17,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Icon from "@/components/Icon.vue";
 import {Component, Prop} from 'vue-property-decorator';
 
-@Component({
-  components:{Icon}
-})
+@Component
 export default class Tags extends Vue{
   @Prop() readonly outTags!:string;
   selectedTag:string[] = [];

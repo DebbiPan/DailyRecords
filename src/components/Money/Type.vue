@@ -20,11 +20,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import {Component, Prop, Watch} from 'vue-property-decorator';
-import Icon from "@/components/Icon.vue"
 
-@Component({
-  components:{Icon}
-})
+
+@Component
 export default class Type extends Vue{
   @Prop() readonly dataType!:string;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
