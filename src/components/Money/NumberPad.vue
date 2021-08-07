@@ -33,20 +33,18 @@
 <script lang="ts">
 import Vue from 'vue'
 import Icon from "@/components/Icon.vue";
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 
 @Component({
   components:{Icon}
 })
 export default class NumberPad extends Vue{
   value = '';
-
+  output = '0'
   @Watch('value')
   onValueChange(value:string){
     this.$emit('update:value',value)
   }
-  @Prop() readonly amount!:number
-  output = this.amount.toString()
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   inputContent(event:MouseEvent){
     const button = (event.target as HTMLButtonElement);
@@ -76,7 +74,13 @@ export default class NumberPad extends Vue{
     this.output = '0'
   }
   ok(){
-    this.$emit('update:amount',parseFloat(this.output))
+    if(this.output === '0'){
+      window.alert('请输入金额！')
+    }else{
+      this.$emit('update:amount',parseFloat(this.output))
+      this.$emit('submit',this.output)
+      this.output = '0'
+    }
   }
 }
 </script>
@@ -117,6 +121,7 @@ export default class NumberPad extends Vue{
       &.ok{
         height:120px;
         float: right;
+        background: $pink;
       }
       .dateIcon{
         width:20px;

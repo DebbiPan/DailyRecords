@@ -1,8 +1,11 @@
 <template>
   <div class="wrap">
     <Type :data-type.sync="record.type"/>
-    <Tags class="tags" :out-tags.sync="outTags" @update:tags="onChangeTags"/>
-    <NumberPad @update:value="onValueChange" :amount.sync="record.amount"/>
+    <Tags class="tags" :out-tags.sync="outTags" @update:tags="onTagsChange"/>
+    <NumberPad @update:value="onValueChange"
+               @submit="saveRecord"
+               @update:amount="onAmountChange"/>
+    {{record}}
   </div>
 </template>
 
@@ -11,13 +14,14 @@ import Vue from 'vue';
 import Type from "@/components/Money/Type.vue";
 import Tags from "@/components/Money/Tags.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
-import {Component} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 
 type Record = {
   type:string
   tags:string[]
   notes:string
   amount:number
+  createAt:Date
 }
 
 
@@ -33,11 +37,25 @@ export default class Money extends Vue{
     notes:'',
     amount:0
   }
-  onChangeTags(selected:string[]){
+  recordList:Record[] = JSON.parse(window.localStorage.getItem('recordList')) || '[]';
+  onTagsChange(selected:string[]){
     this.record.tags = selected
   }
-  onValueChange(value:string){
+  onValueChange(value:string){``
     this.record.notes = value
+  }
+  onAmountChange(value:number){
+    this.record.amount = value
+  }
+  saveRecord(){
+    const deepClone = JSON.parse(JSON.stringify(this.record))
+    this.recordList.push(deepClone)
+    console.log(this.recordList);
+  }
+
+  @Watch('recordList')
+  onRecordListChange(){
+    window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
   }
 }
 
