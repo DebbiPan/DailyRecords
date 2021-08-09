@@ -1,9 +1,8 @@
 <template>
   <div class="wrap">
-    <Layout>
-      <LabelNav class="nav"/>
+      <LabelNav class="nav" :tag-type="tagType" @update:value="updateType"/>
       <TagList class="tags"/>
-    </layout>
+    <layout />
   </div>
 </template>
 
@@ -17,8 +16,12 @@ import TagList from '@/components/Labels/TagList.vue';
 @Component({
   components:{Layout,LabelNav,TagList}
 })
-export default class Labels extends Vue{
 
+export default class Labels extends Vue{
+  tagType = '-';
+  updateType(value:string){
+    this.tagType = value
+  }
 }
 </script>
 

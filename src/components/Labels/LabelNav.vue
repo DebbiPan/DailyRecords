@@ -2,18 +2,36 @@
   <div class="nav">
     <div class="title">类别设置</div>
     <ul class="types">
-      <li class="expenditure selected">支出</li>
-      <li class="income">收入</li>
+      <li class="expenditure"
+          @click="changeType('-')"
+        :class="{selected: tagType==='-'}"
+      >
+        支出
+      </li>
+      <li class="income"
+          :class="{selected: tagType==='+'}"
+          @click="changeType('+')">
+        收入
+      </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
 export default class LabelNav extends Vue {
+  @Prop() readonly  tagType!:string
+  changeType(value:string){
+    if(this.tagType!=='+'&&this.tagType!=='-'){
+      throw new Error('出差了')
+    }else{
+      this.$emit('update:value',value)
+    }
+
+  }
 
 }
 </script>

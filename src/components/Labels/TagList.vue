@@ -6,7 +6,9 @@
           <Icon name="medical" class="icon"></Icon>
           <span class="text">{{ tag }}</span>
         </div>
-        <Icon name="delete" class="icon"/>
+        <div class="delete" @click="removeTag(tag)">
+          <Icon name="delete" class="icon" />
+        </div>
       </div>
     </div>
     <button @click="createTag">添加</button>
@@ -15,13 +17,22 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 import tagListModel from '@/models/tagListModel';
 
 
 @Component
 export default class tagList extends Vue {
   tags = tagListModel.data;
+  @Prop() readonly tagType!:string
+  output = [];
+  input = [];
+
+  if()
+
+  removeTag(tagName:string){
+    tagListModel.remove(tagName)
+  }
 
   createTag() {
     const tagName = window.prompt('请输入你要添加的标签名');
@@ -67,11 +78,13 @@ export default class tagList extends Vue {
           margin-left:10px;
         }
       }
-      > .icon {
-        width: 30px;
-        height: 30px;
-        margin-top:10px;
-        color: #870000;
+      >.delete{
+        >.icon {
+          width: 30px;
+          height: 30px;
+          margin-top:10px;
+          color: #870000;
+        }
       }
     }
   }
