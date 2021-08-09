@@ -14,13 +14,16 @@ import Type from '@/components/Money/Type.vue';
 import Tags from '@/components/Money/Tags.vue';
 import NumberPad from '@/components/Money/NumberPad.vue';
 import {Component, Watch} from 'vue-property-decorator';
-import model from '@/model.ts'
+import recordListModel from '@/models/recordListModel'
+import tagListModel from '@/models/tagListModel';
 
+const recordList = recordListModel.fetch();
+const tagsList = tagListModel.fetch();
 @Component({
   components: {Type, Tags, NumberPad}
 })
 export default class Money extends Vue {
-  outTags = ['餐饮', '日用', '交通', '买菜', '零食', '娱乐', '通讯', '服饰', '美容', '住房', '缴费', '旅行', '医疗', '汽车', '学习', '快递'];
+  outTags = tagsList;//设定初始tags的值，页面加载完毕之后只获取了Tags
   // eslint-disable-next-line no-undef
   record: RecordItem = {
     type: '-',
@@ -28,7 +31,7 @@ export default class Money extends Vue {
     notes: '',
     amount: 0
   };
-  recordList = model.fetch()
+  recordList = recordList//将获取的历史数据给recordList，此时历史数据放在recordList中
 
   onTagsChange(selected: string[]) {
     this.record.tags = selected;
@@ -43,14 +46,13 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    const record2 = model.clone(this.record)
+    const record2 = recordListModel.clone(this.record)
     record2.createAt = new Date();
-    this.recordList.push(record2);
+    this.recordList.push(record2);//将新创建的记账事件存进recordList
   }
-
   @Watch('recordList')
   onRecordListChange() {
-    model.save(this.recordList)
+    recordListModel.save(this.recordList)//当发现recordList发生改变时调用save方法将recordList存进localStorage
   }
 }
 

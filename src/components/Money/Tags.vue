@@ -2,15 +2,15 @@
   <div class="tags">
     <ul>
       <li v-for="outTag in outTags" :key="outTag"
-          @click="select(outTag)">
+          @click="select(outTag)" class="item">
         <Icon name="dining" class="icon"
               :class="{selected : selectedTag.indexOf(outTag) >= 0}"/>
         <span class="tag">{{ outTag }}</span>
       </li>
-      <li @click="addTag">
+      <router-link to="/labels"  class="item">
         <Icon name="add"></Icon>
-        <span>添加</span>
-      </li>
+        <span>设置</span>
+      </router-link>
     </ul>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default class Tags extends Vue{
   >ul{
     display:flex;
     flex-flow: row wrap;
-    >li{
+    >.item{
       width:25vw;
       display: flex;
       flex-direction:column;
