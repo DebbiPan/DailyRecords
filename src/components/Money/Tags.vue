@@ -8,7 +8,7 @@
         <span class="tag">{{ outTag }}</span>
       </li>
       <router-link to="/labels"  class="item">
-        <Icon name="add"></Icon>
+        <Icon name="setup"></Icon>
         <span>设置</span>
       </router-link>
     </ul>

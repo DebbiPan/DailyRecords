@@ -15,16 +15,6 @@ export default{
 </script>
 
 <style lang="scss" scoped>
-//.nav-wrapper{
-//  display:flex;
-//  flex-direction: column;
-//  height:100vh;
-//}
-//.content{
-//  overflow: auto;
-//  flex-grow: 1;
-//  border:1px solid red;
-//}
 .nav-wrapper{
   height:100%;
   .content{

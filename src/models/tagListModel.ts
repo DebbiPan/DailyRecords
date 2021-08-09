@@ -6,8 +6,9 @@ type TagListModel = {
   save: () => void
   create : (name:string) => 'success' | 'duplicate'
 }
-
-
+type Tag ={
+  name:string
+}
 
 const tagListModel : TagListModel = {
   data : [],
@@ -25,7 +26,6 @@ const tagListModel : TagListModel = {
       this.save();
       return 'success';
     }
-
   },
   save() {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
