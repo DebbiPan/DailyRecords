@@ -29,37 +29,28 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
-import tagListModel from '@/models/tagListModel';
-
 
 @Component
 export default class tagList extends Vue {
   @Prop() readonly tagType!: string;
   tagList = window.tagList;
-  get outTags(){
-    return this.tagList.filter(item => item.type === '-')
+
+  get outTags() {
+    return this.tagList.filter(item => item.type === '-');
   }
-  get inTags (){
-    return this.tagList.filter(item => item.type === '+')
+
+  get inTags() {
+    return this.tagList.filter(item => item.type === '+');
   }
 
   removeTag(tagName: string) {
-    tagListModel.remove(tagName);
+    window.removeTag(tagName);
   }
 
   createTag() {
     const tagName = window.prompt('请输入你要添加的标签名');
     const createType = this.tagType;
-    if (tagName) {
-      const message = tagListModel.create(tagName,createType);
-      if (message === 'success') {
-        window.alert('添加标签成功');
-      } else if (message === 'duplicate') {
-        window.alert('标签名不能重复');
-      }
-    } else {
-      window.alert('标签不能为空');
-    }
+    window.createTag(tagName, createType);
   }
 }
 </script>

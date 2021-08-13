@@ -14,4 +14,6 @@ type Tag = {
 
 interface Window{
   tagList : Tag[]
+  removeTag : (tag:string)=>void
+  createTag : (tagName:string,createType:string) => void
 }
