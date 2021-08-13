@@ -1,13 +1,24 @@
 <template>
   <div class="wrapTag">
-    <div class="tags">
-      <div v-for="tag in tags" :key="tag" class="tagItem">
+    <div class="tags" v-if="tagType==='-'">
+      <div v-for="tag in outTags" :key="tag.tag" class="tagItem">
         <div class="tag">
-          <Icon name="medical" class="icon"></Icon>
-          <span class="text">{{ tag }}</span>
+          <Icon :name="tag.icon" class="icon"></Icon>
+          <span class="text">{{ tag.tag }}</span>
         </div>
-        <div class="delete" @click="removeTag(tag)">
-          <Icon name="delete" class="icon" />
+        <div class="delete" @click="removeTag(tag.tag)">
+          <Icon name="delete" class="icon"/>
+        </div>
+      </div>
+    </div>
+    <div class="tags" v-if="tagType==='+'">
+      <div v-for="tag in inTags" :key="tag.tag" class="tagItem">
+        <div class="tag">
+          <Icon :name="tag.icon" class="icon"></Icon>
+          <span class="text">{{ tag.tag }}</span>
+        </div>
+        <div class="delete" @click="removeTag(tag.tag)">
+          <Icon name="delete" class="icon"/>
         </div>
       </div>
     </div>
@@ -23,21 +34,24 @@ import tagListModel from '@/models/tagListModel';
 
 @Component
 export default class tagList extends Vue {
-  tags = tagListModel.data;
-  @Prop() readonly tagType!:string
-  output = [];
-  input = [];
+  @Prop() readonly tagType!: string;
+  tagList = window.tagList;
+  get outTags(){
+    return this.tagList.filter(item => item.type === '-')
+  }
+  get inTags (){
+    return this.tagList.filter(item => item.type === '+')
+  }
 
-  if()
-
-  removeTag(tagName:string){
-    tagListModel.remove(tagName)
+  removeTag(tagName: string) {
+    tagListModel.remove(tagName);
   }
 
   createTag() {
     const tagName = window.prompt('请输入你要添加的标签名');
+    const createType = this.tagType;
     if (tagName) {
-      const message = tagListModel.create(tagName);
+      const message = tagListModel.create(tagName,createType);
       if (message === 'success') {
         window.alert('添加标签成功');
       } else if (message === 'duplicate') {
@@ -52,42 +66,48 @@ export default class tagList extends Vue {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
-.wrapTag{
+
+.wrapTag {
   .tags {
-    margin:10px 5px;
+    margin: 10px 5px;
 
     > .tagItem {
       height: 50px;
       display: flex;
       flex-direction: row;
       border-bottom: 1px solid $darkgrey;
+
       > .tag {
         width: 100vw;
         padding: 5px;
         display: flex;
         flex-direction: row;
         align-items: center;
+
         > .icon {
           width: 30px;
           height: 30px;
           border-radius: 30px;
           background: $grey;
         }
+
         > .text {
           font-size: 18px;
-          margin-left:10px;
+          margin-left: 10px;
         }
       }
-      >.delete{
-        >.icon {
+
+      > .delete {
+        > .icon {
           width: 30px;
           height: 30px;
-          margin-top:10px;
+          margin-top: 10px;
           color: #870000;
         }
       }
     }
   }
+
   > button {
     display: block;
     padding: 10px 20px;

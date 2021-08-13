@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
       <LabelNav class="nav" :tag-type="tagType" @update:value="updateType"/>
-      <TagList class="tags"/>
+      <TagList class="tags" :tag-type="tagType"/>
     <layout />
   </div>
 </template>

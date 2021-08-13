@@ -1,12 +1,14 @@
 const localStorageKeyName = 'tagList';
 
 type TagListModel = {
-  data: string[]
-  fetch: () => string[]
+  data: Tag[]
+  fetch: () => Tag[]
   save: () => void
   create: (name: string) => 'success' | 'duplicate'
   remove: (name: string) => void
 }
+
+
 
 const tagListModel: TagListModel = {
   data: [],
@@ -16,11 +18,12 @@ const tagListModel: TagListModel = {
   },
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  create(name) {
-    if (this.data.indexOf(name) >= 0) {
+  create(tagName:string,createType:string) {
+    const tags = this.data.map(item => item.tag)
+    if (tags.indexOf(tagName) >= 0) {
       return 'duplicated';
     } else {
-      this.data.push(name);
+      this.data.push({type:createType,tag:tagName,icon:"addIcon"});
       this.save();
       return 'success';
     }
@@ -30,7 +33,7 @@ const tagListModel: TagListModel = {
   },
   remove(name) {
     for (let i = 0; i <= this.data.length; i++) {
-      if (this.data[i] === name) {
+      if (this.data[i].tag === name) {
         this.data.splice(i, 1);
         break;
       }

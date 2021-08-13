@@ -1,11 +1,23 @@
 <template>
   <div class="tags">
-    <ul>
-      <li v-for="outTag in outTags" :key="outTag"
-          @click="select(outTag)" class="item">
-        <Icon name="dining" class="icon"
-              :class="{selected : selectedTag.indexOf(outTag) >= 0}"/>
-        <span class="tag">{{ outTag }}</span>
+    <ul v-if="tagType === '-'">
+      <li v-for="tag in outTags" :key="tag.tag"
+          @click="select(tag.tag)" class="item">
+        <Icon :name="tag.icon" class="icon"
+              :class="{selected : selectedTag.indexOf(tag.tag) >= 0}"/>
+        <span class="tag">{{ tag.tag }}</span>
+      </li>
+      <router-link to="/labels"  class="item">
+        <Icon name="setup"></Icon>
+        <span>设置</span>
+      </router-link>
+    </ul>
+    <ul v-if="tagType === '+'">
+      <li v-for="tag in inTags" :key="tag.tag"
+          @click="select(tag.tag)" class="item">
+        <Icon :name="tag.icon" class="icon"
+              :class="{selected : selectedTag.indexOf(tag.tag) >= 0}"/>
+        <span class="tag">{{ tag.tag }}</span>
       </li>
       <router-link to="/labels"  class="item">
         <Icon name="setup"></Icon>
@@ -21,7 +33,11 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Tags extends Vue{
-  @Prop() readonly outTags!:string;
+  // eslint-disable-next-line no-undef
+  @Prop() readonly allTags!:Tag[];
+  @Prop() readonly tagType!:string;
+  outTags = this.allTags.filter(item => item.type ==='-');
+  inTags = this.allTags.filter(item => item.type === '+')
   selectedTag:string[] = [];
   select(tag:string){
     const selected = this.selectedTag;
@@ -32,14 +48,6 @@ export default class Tags extends Vue{
       selected.push(tag);
     }
     this.$emit('update:tags',selected)
-  }
-  addTag(){
-    const tagName = window.prompt('请输入你要添加的标签名')
-    if(tagName === ''){
-      window.alert('标签名不能为空')
-    }else{
-      this.$emit('update:outTags',[...this.outTags,tagName])
-    }
   }
 }
 </script>

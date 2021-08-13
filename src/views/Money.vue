@@ -1,9 +1,12 @@
 <template>
   <div class="wrap">
     <Type :data-type.sync="record.type"/>
-    <Tags class="tags" :out-tags.sync="outTags" @update:tags="onTagsChange"/>
+    <Tags class="tags"
+          :tag-type="record.type"
+          :all-tags.sync="Tags"
+          @update:tags="onTagsChange"/>
     <NumberPad @update:value="onValueChange"
-               @submit="saveRecord"
+               @submit="createRecord"
                @update:amount="onAmountChange"/>
   </div>
 </template>
@@ -15,15 +18,13 @@ import Tags from '@/components/Money/Tags.vue';
 import NumberPad from '@/components/Money/NumberPad.vue';
 import {Component, Watch} from 'vue-property-decorator';
 import recordListModel from '@/models/recordListModel'
-import tagListModel from '@/models/tagListModel';
 
 const recordList = recordListModel.fetch();
-const tagsList = tagListModel.fetch();
 @Component({
   components: {Type, Tags, NumberPad}
 })
 export default class Money extends Vue {
-  outTags = tagsList;//设定初始tags的值，页面加载完毕之后只获取了Tags
+  Tags = window.tagList;//设定初始tags的值，页面加载完毕之后只获取了Tags
   // eslint-disable-next-line no-undef
   record: RecordItem = {
     type: '-',
@@ -45,10 +46,8 @@ export default class Money extends Vue {
     this.record.amount = value;
   }
 
-  saveRecord() {
-    const record2 = recordListModel.clone(this.record)
-    record2.createAt = new Date();
-    this.recordList.push(record2);//将新创建的记账事件存进recordList
+  createRecord() {
+    recordListModel.create(this.record)//将新创建的记账事件存进recordList
   }
   @Watch('recordList')
   onRecordListChange() {

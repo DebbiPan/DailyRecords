@@ -5,3 +5,13 @@ type RecordItem = {
   amount: number
   createAt?: Date
 }
+
+type Tag = {
+  type:string
+  tag:string
+  icon:string
+}
+
+interface Window{
+  tagList : Tag[]
+}
