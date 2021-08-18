@@ -55,6 +55,7 @@ nav{
     height:30px;
     position: relative;
     top:10px;
+    left:5px;
     >.icon{
       width:30px;
       height:30px;
