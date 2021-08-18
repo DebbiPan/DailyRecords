@@ -29,28 +29,37 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
+import clone from '@/models/clone';
 
-@Component
+@Component({
+  computed:{
+    tagList(){
+      return this.$store.state.tagList;
+    },
+    outTags() {
+      return this.tagList.filter(item => item.type === '-');
+    },
+    inTags() {
+      return this.tagList.filter(item => item.type === '+');
+    }
+  }
+})
 export default class tagList extends Vue {
   @Prop() readonly tagType!: string;
-  tagList = window.tagList;
 
-  get outTags() {
-    return this.tagList.filter(item => item.type === '-');
+  created(){
+    this.$store.commit('fetchTags')
   }
 
-  get inTags() {
-    return this.tagList.filter(item => item.type === '+');
-  }
-
-  removeTag(tagName: string) {
-    window.removeTag(tagName);
+  removeTag(tagName) {
+    this.$store.commit('removeTag',tagName);
   }
 
   createTag() {
     const tagName = window.prompt('请输入你要添加的标签名');
-    const createType = this.tagType;
-    window.createTag(tagName, createType);
+    const createType = clone(this.tagType)
+    console.log(createType);
+    this.$store.commit('createTag', {name:tagName, type:createType})
   }
 }
 </script>

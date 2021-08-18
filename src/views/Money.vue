@@ -3,7 +3,7 @@
     <Type :data-type.sync="record.type"/>
     <Tags class="tags"
           :tag-type="record.type"
-          :all-tags.sync="Tags"
+          :all-tags.sync="tagList"
           @update:tags="onTagsChange"/>
     <NumberPad @update:value="onValueChange"
                @submit="createRecord"
@@ -16,15 +16,20 @@ import Vue from 'vue';
 import Type from '@/components/Money/Type.vue';
 import Tags from '@/components/Money/Tags.vue';
 import NumberPad from '@/components/Money/NumberPad.vue';
-import {Component, Watch} from 'vue-property-decorator';
-import recordListModel from '@/models/recordListModel'
+import {Component} from 'vue-property-decorator';
 
-const recordList = recordListModel.fetch();
 @Component({
-  components: {Type, Tags, NumberPad}
+  components: {Type, Tags, NumberPad},
+  computed:{
+    recordList(){
+      return this.$store.state.recordList
+    },
+    tagList(){
+      return this.$store.state.tagList
+    }
+  }
 })
 export default class Money extends Vue {
-  Tags = window.tagList;//设定初始tags的值，页面加载完毕之后只获取了Tags
   // eslint-disable-next-line no-undef
   record: RecordItem = {
     type: '-',
@@ -32,7 +37,11 @@ export default class Money extends Vue {
     notes: '',
     amount: 0
   };
-  recordList = recordList//将获取的历史数据给recordList，此时历史数据放在recordList中
+
+  created(){
+    this.$store.commit('fetchRecords')
+    this.$store.commit('fetchTags')
+  }
 
   onTagsChange(selected: string[]) {
     this.record.tags = selected;
@@ -47,11 +56,7 @@ export default class Money extends Vue {
   }
 
   createRecord() {
-    recordListModel.create(this.record)//将新创建的记账事件存进recordList
-  }
-  @Watch('recordList')
-  onRecordListChange() {
-    recordListModel.save(this.recordList)//当发现recordList发生改变时调用save方法将recordList存进localStorage
+    this.$store.commit('createRecord',this.record)//将新创建的记账事件存进recordList
   }
 }
 
