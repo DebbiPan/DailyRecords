@@ -33,7 +33,7 @@ export default class Money extends Vue {
   // eslint-disable-next-line no-undef
   record: RecordItem = {
     type: '-',
-    tags: [],
+    tags:{},
     notes: '',
     amount: 0
   };
@@ -43,7 +43,8 @@ export default class Money extends Vue {
     this.$store.commit('fetchTags')
   }
 
-  onTagsChange(selected: string[]) {
+  // eslint-disable-next-line no-undef
+  onTagsChange(selected: Tag) {
     this.record.tags = selected;
   }
 

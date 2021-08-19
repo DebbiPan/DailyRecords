@@ -16,9 +16,9 @@ export default new Vuex.Store({
     fetchRecords(state) {
       state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
     },
-    createRecord(state,record){
+    createRecord(state,record:RecordItem){
       const record2 = clone(record)
-      record2.createAt = new Date();
+      record2.createAt = new Date().toISOString();
       state.recordList.push(record2);
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
     },

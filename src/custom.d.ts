@@ -1,9 +1,15 @@
+type RootState = {
+  recordList:RecordItem[]
+  tagList:Tag[]
+  currentTag?:Tag
+}
+
 type RecordItem = {
   type: string
-  tags: string[]
+  tags: Tag
   notes: string
   amount: number
-  createAt?: Date
+  createAt?: string
 }
 
 type Tag = {
@@ -12,8 +18,3 @@ type Tag = {
   icon:string
 }
 
-interface Window{
-  tagList : Tag[]
-  removeTag : (tag:string)=>void
-  createTag : (tagName:string,createType:string) => void
-}

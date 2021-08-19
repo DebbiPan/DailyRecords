@@ -2,9 +2,9 @@
   <div class="tags">
     <ul v-if="tagType === '-'">
       <li v-for="tag in outTags" :key="tag.tag"
-          @click="select(tag.tag)" class="item">
+          @click="select(tag)" class="item">
         <Icon :name="tag.icon" class="icon"
-              :class="{selected : selectedTag.indexOf(tag.tag) >= 0}"/>
+              :class="{selected : selectedName === tag.tag}"/>
         <span class="tag">{{ tag.tag }}</span>
       </li>
       <router-link to="/labels"  class="item">
@@ -14,9 +14,9 @@
     </ul>
     <ul v-if="tagType === '+'">
       <li v-for="tag in inTags" :key="tag.tag"
-          @click="select(tag.tag)" class="item">
+          @click="select(tag)" class="item">
         <Icon :name="tag.icon" class="icon"
-              :class="{selected : selectedTag.indexOf(tag.tag) >= 0}"/>
+              :class="{selected : selectedName === tag.tag}"/>
         <span class="tag">{{ tag.tag }}</span>
       </li>
       <router-link to="/labels"  class="item">
@@ -38,16 +38,16 @@ export default class Tags extends Vue{
   @Prop() readonly tagType!:string;
   outTags = this.allTags.filter(item => item.type ==='-');
   inTags = this.allTags.filter(item => item.type === '+')
-  selectedTag:string[] = [];
-  select(tag:string){
-    const selected = this.selectedTag;
-    if(selected.length === 0){
-      selected.push(tag);
-    }else if(selected.length === 1){
-      selected.splice(0,1);
-      selected.push(tag);
-    }
-    this.$emit('update:tags',selected)
+  // eslint-disable-next-line no-undef
+  selectedTag:Tag = {};//选中的标签决定是否高亮
+  get selectedName (){
+    return this.selectedTag.tag
+  }
+
+  // eslint-disable-next-line no-undef
+  select(tag:Tag){
+    this.selectedTag = tag
+    this.$emit('update:tags',this.selectedTag)
   }
 }
 </script>

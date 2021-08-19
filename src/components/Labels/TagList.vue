@@ -58,7 +58,6 @@ export default class tagList extends Vue {
   createTag() {
     const tagName = window.prompt('请输入你要添加的标签名');
     const createType = clone(this.tagType)
-    console.log(createType);
     this.$store.commit('createTag', {name:tagName, type:createType})
   }
 }
