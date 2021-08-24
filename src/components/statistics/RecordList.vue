@@ -18,12 +18,13 @@
         </div>
       </div>
       <div class="count" v-for="(item,index) in group.items" :key="index">
-        <Icon name="car" class="icon"/>
+        <Icon :name="item.tags.icon" class="icon"/>
         <div class="text">{{item.tags.tag}}</div>
         <div class="notes">{{ item.notes }}</div>
         <div class="amount" v-if="item.type === '-'">-{{ item.amount }}</div>
         <div class="amount" v-if="item.type === '+'">{{ item.amount }}</div>
       </div>
+      <div class="allTotal">合计：{{group.total.all}}</div>
     </div>
     <div class="block"></div>
   </div>
@@ -163,6 +164,9 @@ export default class RecordList extends Vue {
         flex-grow: 1;
         text-align: right;
       }
+    }
+    .allTotal{
+      text-align: right;
     }
   }
 
