@@ -4,7 +4,7 @@
       <div class="dayTitle">
         <div class="dateRecord">
           <span class="date">{{ group.title }}</span>
-          <span class="week">星期三</span>
+          <span class="week">{{formatWeek(group.title)}}</span>
         </div>
         <div class="total">
           <div class="out">
@@ -19,14 +19,13 @@
       </div>
       <div class="count" v-for="(item,index) in group.items" :key="index">
         <Icon name="car" class="icon"/>
-        <div class="text">{{ item.tags.tag }}</div>
+        <div class="text"></div>
         <div class="notes">{{ item.notes }}</div>
         <div class="amount" v-if="item.type === '-'">-{{ item.amount }}</div>
         <div class="amount" v-if="item.type === '+'">{{ item.amount }}</div>
       </div>
     </div>
     <div class="block"></div>
-    {{ groupedList }}
   </div>
 </template>
 
@@ -40,6 +39,25 @@ import clone from '@/models/clone';
 export default class RecordList extends Vue {
   created() {
     this.$store.commit('fetchRecords');
+  }
+  formatWeek(string:string){
+    const week = dayjs(string).format('d')
+    switch (week){
+      case '1':
+        return '星期一';
+      case '2':
+        return '星期二';
+      case '3':
+        return '星期三';
+      case '4':
+        return '星期四';
+      case '5':
+        return '星期五';
+      case '6':
+        return '星期六';
+      case '0':
+        return '星期天';
+    }
   }
 
   get recordList() {
