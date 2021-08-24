@@ -32,8 +32,8 @@ import {Component, Prop} from 'vue-property-decorator';
 import clone from '@/models/clone';
 
 @Component({
-  computed:{
-    tagList(){
+  computed: {
+    tagList() {
       return this.$store.state.tagList;
     },
     outTags() {
@@ -47,18 +47,19 @@ import clone from '@/models/clone';
 export default class tagList extends Vue {
   @Prop() readonly tagType!: string;
 
-  created(){
-    this.$store.commit('fetchTags')
+  created() {
+    this.$store.commit('fetchTags');
   }
 
   removeTag(tagName) {
-    this.$store.commit('removeTag',tagName);
+    this.$store.commit('removeTag', tagName);
   }
 
   createTag() {
     const tagName = window.prompt('请输入你要添加的标签名');
-    const createType = clone(this.tagType)
-    this.$store.commit('createTag', {name:tagName, type:createType})
+    const createType = clone(this.tagType);
+    const icon = 'addIcon'
+    this.$store.commit('createTag', {tag: tagName, type: createType,icon});
   }
 }
 </script>

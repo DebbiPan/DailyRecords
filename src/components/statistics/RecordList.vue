@@ -19,7 +19,7 @@
       </div>
       <div class="count" v-for="(item,index) in group.items" :key="index">
         <Icon name="car" class="icon"/>
-        <div class="text"></div>
+        <div class="text">{{item.tags.tag}}</div>
         <div class="notes">{{ item.notes }}</div>
         <div class="amount" v-if="item.type === '-'">-{{ item.amount }}</div>
         <div class="amount" v-if="item.type === '+'">{{ item.amount }}</div>
