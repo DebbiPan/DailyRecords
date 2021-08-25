@@ -57,7 +57,12 @@ export default class tagList extends Vue {
     const tagName = window.prompt('请输入你要添加的标签名');
     const createType = clone(this.tagType);
     const icon = 'addIcon'
-    this.$store.commit('createTag', {tag: tagName, type: createType,icon});
+    if(tagName){
+      this.$store.commit('createTag', {tag: tagName, type: createType,icon});
+    }else{
+      window.alert('标签名不能为空')
+    }
+
   }
 }
 </script>
@@ -111,6 +116,8 @@ export default class tagList extends Vue {
     padding: 10px 20px;
     border-radius: 10px;
     margin: 10px auto;
+    background: $pink;
+    color:white;
   }
 }
 

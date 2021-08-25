@@ -1,11 +1,12 @@
 <template>
   <div class="wrap">
-    <Type :data-type.sync="record.type"/>
+    <Type :data-type.sync="record.type" class="type"/>
     <Tags class="tags"
           :tag-type="record.type"
           :all-tags.sync="tagList"
           @update:tags="onTagsChange"/>
     <NumberPad @update:value="onValueChange"
+               class="numberPad"
                @submit="createRecord"
                @update:amount="onAmountChange"/>
   </div>
@@ -20,12 +21,12 @@ import {Component} from 'vue-property-decorator';
 
 @Component({
   components: {Type, Tags, NumberPad},
-  computed:{
-    recordList(){
-      return this.$store.state.recordList
+  computed: {
+    recordList() {
+      return this.$store.state.recordList;
     },
-    tagList(){
-      return this.$store.state.tagList
+    tagList() {
+      return this.$store.state.tagList;
     }
   }
 })
@@ -33,14 +34,14 @@ export default class Money extends Vue {
   // eslint-disable-next-line no-undef
   record: RecordItem = {
     type: '-',
-    tags:{},
+    tags: {},
     notes: '',
     amount: 0
   };
 
-  created(){
-    this.$store.commit('fetchRecords')
-    this.$store.commit('fetchTags')
+  created() {
+    this.$store.commit('fetchRecords');
+    this.$store.commit('fetchTags');
   }
 
   // eslint-disable-next-line no-undef
@@ -57,7 +58,13 @@ export default class Money extends Vue {
   }
 
   createRecord() {
-    this.$store.commit('createRecord',this.record)//将新创建的记账事件存进recordList
+    const tag = this.record.tags.tag;
+    if (tag) {
+      this.$store.commit('createRecord', this.record);//将新创建的记账事件存进recordList
+    } else if (!tag) {
+      window.alert('请选择标签!');
+    }
+
   }
 }
 
@@ -65,14 +72,23 @@ export default class Money extends Vue {
 
 <style lang="scss" scoped>
 .wrap {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  position: relative;
+
+  .type {
+    position: fixed;
+    top: 0;
+  }
 
   .tags {
-    flex: 1;
     overflow: auto;
+    margin-top: 50px;
+    margin-bottom: 300px;
+  }
+
+  .numberPad {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
   }
 }
 </style>

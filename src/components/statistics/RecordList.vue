@@ -98,7 +98,7 @@ export default class RecordList extends Vue {
         current.filter(i => i.type === '-').map(i =>
             outAmount -= i.amount);
       } else {
-        return [];
+        return '什么也没有哦，快来记录吧！';
       }
       allAmount = inAmount + outAmount;
       result[i].total = {all: allAmount, in: inAmount, out: outAmount};
