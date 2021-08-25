@@ -39,7 +39,7 @@ export default class Tags extends Vue{
   outTags = this.allTags.filter(item => item.type ==='-');
   inTags = this.allTags.filter(item => item.type === '+')
   // eslint-disable-next-line no-undef
-  selectedTag:Tag = {};//选中的标签决定是否高亮
+  selectedTag = {} as Tag;//选中的标签决定是否高亮
   get selectedName (){
     return this.selectedTag.tag
   }

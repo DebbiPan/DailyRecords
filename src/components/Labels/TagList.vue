@@ -31,27 +31,25 @@ import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 import clone from '@/models/clone';
 
-@Component({
-  computed: {
-    tagList() {
-      return this.$store.state.tagList;
-    },
-    outTags() {
-      return this.tagList.filter(item => item.type === '-');
-    },
-    inTags() {
-      return this.tagList.filter(item => item.type === '+');
-    }
-  }
-})
+@Component
 export default class tagList extends Vue {
   @Prop() readonly tagType!: string;
+
+  get tagList() {
+    return this.$store.state.tagList;
+  }
+  get outTags() {
+    return this.tagList.filter(item => item.type === '-');
+  }
+  get inTags() {
+    return this.tagList.filter(item => item.type === '+');
+  }
 
   created() {
     this.$store.commit('fetchTags');
   }
 
-  removeTag(tagName) {
+  removeTag(tagName:string) {
     this.$store.commit('removeTag', tagName);
   }
 
